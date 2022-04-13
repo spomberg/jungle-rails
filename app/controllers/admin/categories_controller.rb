@@ -3,7 +3,7 @@ class Admin::CategoriesController < ApplicationController
                                password: ENV['HTTP_BASIC_PASSWORD']
 
   def index
-    @category = Category.order(id: :desc).all
+    @category = Category.order(name: :asc).all
   end
 
   def new
