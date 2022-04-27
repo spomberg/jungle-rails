@@ -53,5 +53,15 @@ RSpec.describe User, type: :model do
         expect(user.errors[:email]).to eq(["can't be blank"])
       end
     end
+
+    context "given that the email entered is not unique " do
+      it "doesn't save successfully" do
+        user1 = User.new(name: "abc", email: "abc@gmail.com", password: "abc", password_confirmation: "abc").save
+        user2 = User.new(name: "abc", email: "abc@gmail.com", password: "abc", password_confirmation: "abc")
+        validation = user2.save
+        expect(validation).to eq(false)
+        expect(user2.errors[:email]).to eq(["has already been taken"])
+      end
+    end
   end
 end
