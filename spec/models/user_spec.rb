@@ -18,7 +18,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context "given that the password fields are both blank " do
+    context "given that the password fields are both blank" do
       it "doesn't save successfully" do
         user = User.new(name: "abc", email: "abc@gmail.com", password: nil, password_confirmation: nil)
         validation = user.save
@@ -33,6 +33,15 @@ RSpec.describe User, type: :model do
         validation = user.save
         expect(validation).to eq(false)
         expect(user.errors[:password_confirmation]).to eq(["can't be blank"])
+      end
+    end
+
+    context "given that name field is blank " do
+      it "doesn't save successfully" do
+        user = User.new(name: nil, email: "abc@gmail.com", password: "abc", password_confirmation: "abc")
+        validation = user.save
+        expect(validation).to eq(false)
+        expect(user.errors[:name]).to eq(["can't be blank"])
       end
     end
   end
