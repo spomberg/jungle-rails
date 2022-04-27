@@ -44,5 +44,14 @@ RSpec.describe User, type: :model do
         expect(user.errors[:name]).to eq(["can't be blank"])
       end
     end
+
+    context "given that email field is blank " do
+      it "doesn't save successfully" do
+        user = User.new(name: "abc", email: nil, password: "abc", password_confirmation: "abc")
+        validation = user.save
+        expect(validation).to eq(false)
+        expect(user.errors[:email]).to eq(["can't be blank"])
+      end
+    end
   end
 end
