@@ -32,5 +32,16 @@ RSpec.describe Product, type: :model do
         expect(product.errors[:price]).to eq(["is not a number", "can't be blank"]) 
       end
     end
+    
+    context "given that the quantity field is missing" do
+      it "should not save" do
+        cat1 = Category.new
+        cat1.save
+        product = Product.new(name: "abc", price_cents: 12, quantity: nil, category: cat1)
+        validation = product.validate
+        expect(validation).to eq(false) 
+        expect(product.errors[:quantity]).to eq(["can't be blank"]) 
+      end
+    end
   end
 end
