@@ -83,4 +83,14 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe '.authenticate_with_credentials' do
+    context "given that both email and password match" do
+      it "authenticates the user" do
+        user = User.new(name: "abc", email: "abc@gmail.com", password: "12345678", password_confirmation: "12345678")
+        user.save
+        expect(User.authenticate_with_credentials("abc@gmail.com", "12345678")).to eq(user)
+      end
+    end
+  end
 end
