@@ -85,11 +85,27 @@ RSpec.describe User, type: :model do
   end
 
   describe '.authenticate_with_credentials' do
-    context "given that both email and password match" do
+    context "given that email and password match" do
       it "authenticates the user" do
         user = User.new(name: "abc", email: "abc@gmail.com", password: "12345678", password_confirmation: "12345678")
         user.save
-        expect(User.authenticate_with_credentials("abc@gmail.com", "12345678")).to eq(user)
+        expect(User.authenticate_with_credentials("abc@gmail.com", "12345678").id).to eq(user.id)
+      end
+    end
+
+    context "given that email and password don't match" do
+      it "doesn't authenticates the user" do
+        user = User.new(name: "abc", email: "abc@gmail.com", password: "12345678", password_confirmation: "12345678")
+        user.save
+        expect(User.authenticate_with_credentials("abc@gmail.com", "12345677")).to eq(nil)
+      end
+    end
+
+    context "given that there are extra spaces in the email field" do
+      it "authenticates the user" do
+        user = User.new(name: "abc", email: "abc@gmail.com", password: "12345678", password_confirmation: "12345678")
+        user.save
+        expect(User.authenticate_with_credentials(" abc@gmail.com " , "12345678").id).to eq(user.id)
       end
     end
   end
