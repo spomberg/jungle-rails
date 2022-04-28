@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   has_secure_password
 
   def self.authenticate_with_credentials(email, password)
-    valid_email = email.delete(" ")
+    valid_email = email.delete(" ").downcase
     user = User.find_by_email(valid_email)
     if user && user.authenticate(password)
       user

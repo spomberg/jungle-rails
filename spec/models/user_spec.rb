@@ -108,5 +108,13 @@ RSpec.describe User, type: :model do
         expect(User.authenticate_with_credentials(" abc@gmail.com " , "12345678").id).to eq(user.id)
       end
     end
+    
+    context "given that the user types the wrong case in the email address" do
+      it "authenticates the user" do
+        user = User.new(name: "abc", email: "abc@gmail.com", password: "12345678", password_confirmation: "12345678")
+        user.save
+        expect(User.authenticate_with_credentials("aBc@gmail.com" , "12345678").id).to eq(user.id)
+      end
+    end
   end
 end
