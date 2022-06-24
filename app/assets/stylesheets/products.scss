@@ -26,7 +26,7 @@ main section.categories-show {
         margin: auto;
         display: block;
       }
-
+      
       footer {
         position: absolute;
         bottom: 0;
@@ -38,6 +38,9 @@ main section.categories-show {
         width: 100%;
         opacity: 0.3;
         transition: all 0.3s;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
       }
 
       aside.price {
